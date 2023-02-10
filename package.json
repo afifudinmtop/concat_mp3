@@ -1,6 +1,6 @@
 {
   "name": "concat_mp3",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "concat multiple mp3 files",
   "main": "app.js",
   "scripts": {

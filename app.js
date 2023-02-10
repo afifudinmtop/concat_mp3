@@ -4,6 +4,7 @@ const express = require("express");
 const ffmpeg = require("fluent-ffmpeg");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 const upload = multer({ dest: "uploads/" });
@@ -39,7 +40,10 @@ app.post("/upload", upload.array("mp3-files"), (req, res) => {
       console.log("FFmpeg stderr:", stderr);
 
       const filePath = path.join(__dirname, concatFileName);
-      const fileUrl = `http://localhost:3000/${concatFileName}`;
+      const fileUrl = `http://localhost:3000/result/${concatFileName}`;
+
+      emptyFolder("./uploads/");
+      moveFile(`./${concatFileName}`, `./result/${concatFileName}`);
 
       res.send(
         `Download the concatenated MP3 file: <a href="${fileUrl}">${fileUrl}</a>`
@@ -51,3 +55,31 @@ app.post("/upload", upload.array("mp3-files"), (req, res) => {
 app.listen(3000, () => {
   console.log("Server listening on port 3000");
 });
+
+// empty the folder uploads
+function emptyFolder(folder) {
+  try {
+    fs.readdirSync(folder).forEach((file) => {
+      const curPath = path.join(folder, file);
+      if (fs.lstatSync(curPath).isDirectory()) {
+        // recurse
+        emptyFolder(curPath);
+      } else {
+        // delete file
+        fs.unlinkSync(curPath);
+      }
+    });
+    // fs.rmdirSync(folder);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+// move file
+function moveFile(src, dest) {
+  fs.rename(src, dest, (err) => {
+    if (err) {
+      console.error(err);
+    }
+  });
+}
