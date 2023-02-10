@@ -1,13 +1,13 @@
 {
   "name": "concat_mp3",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "concat multiple mp3 files",
   "main": "app.js",
   "scripts": {
     "start": "node ./app.js"
   },
   "author": "Afifudin Maarif",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "express": "4.18.2",
     "fluent-ffmpeg": "2.1.2",
