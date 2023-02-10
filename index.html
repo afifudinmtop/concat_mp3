@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Concatenate MP3 Files</title>
+    <style>
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .file-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        width: 80%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .file-item {
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        width: 200px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="mp3-files">Select MP3 files:</label>
+        <input
+          type="file"
+          id="mp3-files"
+          name="mp3-files"
+          multiple
+          accept=".mp3"
+        />
+        <ul id="file-list" class="file-list"></ul>
+        <button type="submit">Upload and Concatenate</button>
+      </form>
+    </div>
+    <script>
+      const fileInput = document.querySelector("#mp3-files");
+      const fileList = document.querySelector("#file-list");
+
+      fileInput.addEventListener("change", (event) => {
+        const files = event.target.files;
+
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const fileItem = document.createElement("li");
+
+          fileItem.classList.add("file-item");
+          fileItem.textContent = file.name;
+
+          fileList.appendChild(fileItem);
+        }
+      });
+    </script>
+  </body>
+</html>
